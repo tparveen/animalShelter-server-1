@@ -1,6 +1,10 @@
 {
   "name": "thinkful-backend-template",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.8.0",
+    "npm": "5.4.2"
+  },
   "description": "Template for an Express backend",
   "main": "index.js",
   "scripts": {
