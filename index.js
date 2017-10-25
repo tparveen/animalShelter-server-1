@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-app.get('api/cats', (req, res, next) => {
+app.get('/api/cats', (req, res, next) => {
   res.json({
     imageURL:
       'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
@@ -32,7 +32,7 @@ app.get('api/cats', (req, res, next) => {
   });
 });
 
-app.get('api/dogs', (req, res, next) => {
+app.get('/api/dogs', (req, res, next) => {
   res.json({
     imageURL:
       'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
