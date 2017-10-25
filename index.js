@@ -3,7 +3,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
-console.log(CLIENT_ORIGIN)
 const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
@@ -66,7 +65,6 @@ app.use(
   })
 );
 
-console.log(CLIENT_ORIGIN);
 app.use(
   cors({
     origin: CLIENT_ORIGIN
