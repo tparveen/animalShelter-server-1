@@ -13,8 +13,7 @@ const { Queue, peek } = require('./queue');
 const app = express();
 
 // Initialize empty queues for the cat and dog.
-const dogQ = new Queue();
-const catQ = new Queue();
+const [ catQ, dogQ ] = [ new Queue(), new Queue() ];
 
 // Functions for populating each queue.
 // Each queue will start with at least 2 default animals,
