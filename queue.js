@@ -3,12 +3,18 @@
 function createNode(data = null, next = null, prev = null) {
   return { data, next, prev };
 }
+/**
+ * An ordered structure which can add elements to its end and remove elements from its beginning.
+ */
 class Queue {
   constructor() {
     this.first = null;
     this.last = null;
   }
-
+  /**
+   * Add data to the queue.
+   * @param {*} data - the data to add to the queue.
+   */
   enqueue(data) {
     const node = createNode(data);
     if (this.last) {
@@ -22,6 +28,9 @@ class Queue {
       this.first = node;
     }
   }
+  /**
+   * Remove data from the queue.
+   */
   dequeue() {
     if (this.first === null) {
       return;
