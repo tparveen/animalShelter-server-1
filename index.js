@@ -19,23 +19,24 @@ const catQ = new Queue();
 function makeDogQueue(dog) {
   //There is always a dog there
   dogQ.enqueue({
-    //imageURL:'http:/', //add images to flick or AWS
     imageURL:
-      'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg', //add images to flick or AWS
+      'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg',
+    description: 'A smiling golden-brown golden retreiver listening to music.',
     name: 'Zeus',
     gender: 'Male',
-    age: '3 yrs',
-    breed: 'Golden Retriever',
-    story: 'Owner Passed away'
+    age: 3,
+    breed: 'Golden retriever',
+    story: 'Owner passed away.'
   });
   dogQ.enqueue({
     imageURL:
       'http://www.dogbreedslist.info/uploads/allimg/dog-pictures/German-Shepherd-Dog-1.jpg',
+    description: 'A German shepherd dog facing the camera, tongue out.',
     name: 'Tornado',
     gender: 'Female',
-    age: '5 yrs',
-    breed: 'German Shepard',
-    story: 'Owner moved to a small aparment'
+    age: 5,
+    breed: 'German shepherd',
+    story: 'Owner moved to a small aparment.'
   });
   dogQ.enqueue(dog);
 }
@@ -43,20 +44,22 @@ function makeCatQueue(cat) {
   catQ.enqueue({
     imageURL:
       'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
+    description: 'Orange bengal cat with black stripes lounging on concrete.',
     name: 'Fluffy',
     gender: 'Female',
-    age: '2 yrs',
+    age: 2,
     breed: 'Bengal',
-    story: 'Thrown on the street'
+    story: 'Thrown on the street.'
   });
   catQ.enqueue({
     imageURL:
       'http://www.catvet.ca/wp-content/uploads/2016/07/cathealth_kitty.jpg',
+    description: 'Tan-colored kitten pawing at the camera.',
     name: 'Thunder',
     gender: 'Male',
-    age: '1 yr',
-    breed: 'Taby',
-    story: 'Owner moved to another country'
+    age: 1,
+    breed: 'Tabby',
+    story: 'Owner moved to another country.'
   });
 
   catQ.enqueue(cat);
@@ -74,13 +77,13 @@ app.use(
 
 app.get('/api/cat', (req, res, next) => {
   makeCatQueue({
-    imageURL:
-      'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
-    name: 'Fluffy',
-    gender: 'Female',
-    age: '2 yrs',
-    breed: 'Bengal',
-    story: 'Thrown on the street'
+    imageURL: 'https://static.pexels.com/photos/20787/pexels-photo.jpg',
+    description: 'Grey siamese cat with bright green eyes, looking up to the camera.',
+    name: 'Tina',
+    gender: 'female',
+    age: 3,
+    breed: 'Siamese',
+    story: 'Abandoned by previous owner.'
   });
   return res.json(peek(catQ));
 });
@@ -90,20 +93,20 @@ app.get('/api/dog', (req, res, next) => {
     imageURL:
       'http://img.freepik.com/free-photo/husky-breed-dog-with-tongue-out_1187-1500.jpg?size=338&ext=jpg',
     name: 'June',
-    gender: 'Female',
-    age: '1 yrs',
-    breed: 'Shiba',
-    story: 'Rejected by mother'
+    gender: 'female',
+    age: 1,
+    breed: 'Shiba Inu',
+    story: 'Rejected by mother.'
   });
   return res.json(peek(dogQ));
 });
 
-app.delete('/api/cat', (req, res, next) =>{
+app.delete('/api/cat', (req, res, next) => {
   catQ.dequeue();
   res.sendStatus(204);
 });
 
-app.delete('/api/dog', (req, res, next) =>{
+app.delete('/api/dog', (req, res, next) => {
   dogQ.dequeue();
   res.sendStatus(204);
 });
