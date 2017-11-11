@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -6,7 +8,7 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
-const Queue = require('./queue');
+const { Queue, peek } = require('./queue');
 
 const app = express();
 
@@ -80,7 +82,7 @@ app.get('/api/cat', (req, res, next) => {
     breed: 'Bengal',
     story: 'Thrown on the street'
   });
-  return res.json(catQ.dequeue());
+  return res.json(peek(catQ));
 });
 
 app.get('/api/dog', (req, res, next) => {
@@ -93,7 +95,17 @@ app.get('/api/dog', (req, res, next) => {
     breed: 'Shiba',
     story: 'Rejected by mother'
   });
-  return res.json(dogQ.dequeue());
+  return res.json(peek(dogQ));
+});
+
+app.delete('/api/cat', (req, res, next) =>{
+  catQ.dequeue();
+  res.sendStatus(204);
+});
+
+app.delete('/api/dog', (req, res, next) =>{
+  dogQ.dequeue();
+  res.sendStatus(204);
 });
 
 function runServer(port = PORT) {
