@@ -36,4 +36,19 @@ class Queue {
     return node.data;
   }
 }
-module.exports = Queue;
+
+/**
+ * Look at the top of the queue
+ * @param {Queue} queue 
+ */
+function peek(queue) {
+  /** If the top of the queue does not have anything
+   * then the queue is empty
+   * otherwise return what's on the top */
+  if (queue.first === null) {
+    return null;
+  }
+  return queue.first.data;
+}
+
+module.exports = { Queue, peek };
