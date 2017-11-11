@@ -1,3 +1,5 @@
+'use strict';
+
 const createKnex = require('knex');
 
 const {DATABASE_URL} = require('./config');
