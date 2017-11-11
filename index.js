@@ -75,6 +75,11 @@ app.use(
   })
 );
 
+// By calling the makeQueue functions in our get endpoints
+// we're ensuring there are always animals to see.
+// You would not do this in production, as it gives a false impression
+// of the availability of the animals.
+
 app.get('/api/cat', (req, res, next) => {
   makeCatQueue({
     imageURL: 'https://static.pexels.com/photos/20787/pexels-photo.jpg',
