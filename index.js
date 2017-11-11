@@ -109,7 +109,7 @@ app.get('/api/dog', (req, res, next) => {
     name: 'June',
     gender: 'female',
     age: 1,
-    breed: 'Shiba Inu',
+    breed: 'Husky',
     story: 'Rejected by mother.'
   });
   return res.json(peek(dogQ));
