@@ -4,7 +4,7 @@ const catData = [
   {
     imageURL:
       'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
-    description: 'Orange bengal cat with black stripes lounging on concrete.',
+    imageDescription: 'Orange bengal cat with black stripes lounging on concrete.',
     name: 'Fluffy',
     gender: 'Female',
     age: 2,
@@ -14,7 +14,7 @@ const catData = [
   {
     imageURL:
       'http://www.catvet.ca/wp-content/uploads/2016/07/cathealth_kitty.jpg',
-    description: 'Tan-colored kitten pawing at the camera.',
+    imageDescription: 'Tan-colored kitten pawing at the camera.',
     name: 'Thunder',
     gender: 'Male',
     age: 1,
@@ -23,7 +23,7 @@ const catData = [
   },
   {
     imageURL: 'https://static.pexels.com/photos/20787/pexels-photo.jpg',
-    description:
+    imageDescription:
       'Grey siamese cat with bright green eyes, looking up to the camera.',
     name: 'Tina',
     gender: 'female',
@@ -36,7 +36,7 @@ const dogData = [
   {
     imageURL:
       'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg',
-    description: 'A smiling golden-brown golden retreiver listening to music.',
+    imageDescription: 'A smiling golden-brown golden retreiver listening to music.',
     name: 'Zeus',
     gender: 'Male',
     age: 3,
@@ -46,7 +46,7 @@ const dogData = [
   {
     imageURL:
       'http://www.dogbreedslist.info/uploads/allimg/dog-pictures/German-Shepherd-Dog-1.jpg',
-    description: 'A German shepherd dog facing the camera, tongue out.',
+    imageDescription: 'A German shepherd dog facing the camera, tongue out.',
     name: 'Tornado',
     gender: 'Female',
     age: 5,
