@@ -4,71 +4,31 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
+const app = express();
+
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 // const { dbConnect } = require('./db-knex');
 
 const { Queue, peek } = require('./Queue');
-
-const app = express();
+const { catData, dogData } = require('./animalData');
 
 // Initialize empty queues for the cat and dog.
 const [ catQ, dogQ ] = [ new Queue(), new Queue() ];
 
-// Functions for populating each queue.
-// Each queue will start with at least 2 default animals,
-// and also enqueue an optional third animal.
-function makeCatQueue(queue, newCat) {
-  queue.enqueue({
-    imageURL:
-      'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
-    description: 'Orange bengal cat with black stripes lounging on concrete.',
-    name: 'Fluffy',
-    gender: 'Female',
-    age: 2,
-    breed: 'Bengal',
-    story: 'Thrown on the street.'
-  });
-  queue.enqueue({
-    imageURL:
-      'http://www.catvet.ca/wp-content/uploads/2016/07/cathealth_kitty.jpg',
-    description: 'Tan-colored kitten pawing at the camera.',
-    name: 'Thunder',
-    gender: 'Male',
-    age: 1,
-    breed: 'Tabby',
-    story: 'Owner moved to another country.'
-  });
+/**
+ * Fill a queue with data.
+ * @param {Queue} queue - a Queue object to populate.
+ * @param {(Object[]|Object)} data - a single object or array of objects with information about an animal.
+ */
+function populateQueue(queue, data) {
+  // spread the data into an array
+  // so we can iterate regardless of whether
+  // the data is one animal or several
+  data = [...data];
 
-  if (newCat) {
-    queue.enqueue(newCat);
-  }
-}
-
-function makeDogQueue(queue, newDog) {
-  queue.enqueue({
-    imageURL:
-      'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg',
-    description: 'A smiling golden-brown golden retreiver listening to music.',
-    name: 'Zeus',
-    gender: 'Male',
-    age: 3,
-    breed: 'Golden retriever',
-    story: 'Owner passed away.'
-  });
-  queue.enqueue({
-    imageURL:
-      'http://www.dogbreedslist.info/uploads/allimg/dog-pictures/German-Shepherd-Dog-1.jpg',
-    description: 'A German shepherd dog facing the camera, tongue out.',
-    name: 'Tornado',
-    gender: 'Female',
-    age: 5,
-    breed: 'German shepherd',
-    story: 'Owner moved to a small aparment.'
-  });
-  
-  if (newDog) {
-    queue.enqueue(newDog);
+  for (let i = 0; i < data.length; i ++) {
+    queue.enqueue(data[i]);
   }
 }
 
@@ -83,34 +43,20 @@ app.use(
   })
 );
 
-// By calling the makeQueue functions in our get endpoints
+// By calling the populateQueue function in our get endpoints
 // we're ensuring there are always animals to see.
 // You would not do this in production, as it gives a false impression
 // of the availability of the animals.
 
 app.get('/api/cat', (req, res, next) => {
-  makeCatQueue(catQ, {
-    imageURL: 'https://static.pexels.com/photos/20787/pexels-photo.jpg',
-    description: 'Grey siamese cat with bright green eyes, looking up to the camera.',
-    name: 'Tina',
-    gender: 'female',
-    age: 3,
-    breed: 'Siamese',
-    story: 'Abandoned by previous owner.'
-  });
+  
+  populateQueue(catQ, catData);
   return res.json(peek(catQ));
 });
 
 app.get('/api/dog', (req, res, next) => {
-  makeDogQueue(dogQ, {
-    imageURL:
-      'http://img.freepik.com/free-photo/husky-breed-dog-with-tongue-out_1187-1500.jpg?size=338&ext=jpg',
-    name: 'June',
-    gender: 'female',
-    age: 1,
-    breed: 'Husky',
-    story: 'Rejected by mother.'
-  });
+  
+  populateQueue(dogQ, dogData);
   return res.json(peek(dogQ));
 });
 
@@ -124,6 +70,10 @@ app.delete('/api/dog', (req, res, next) => {
   res.sendStatus(204);
 });
 
+/**
+ * Start the node application.
+ * @param {number} port - an available port.
+ */
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {
