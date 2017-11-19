@@ -7,14 +7,18 @@ const morgan = require('morgan');
 const app = express();
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
+
+// Import our cat and dog data,
+// and functions for implementing a db
+// TODO: actually implement a db :)
+const { cats: catData, dogs: dogData } = require('./animalData');
 const { dbConnect } = require('./db-mongoose');
 // const { dbConnect } = require('./db-knex');
 
+// import our Queue class & helper functions
+// and initialize empty queues for the cat and dog.
 const { Queue, peek } = require('./Queue');
-const { catData, dogData } = require('./animalData');
-
-// Initialize empty queues for the cat and dog.
-const [ catQ, dogQ ] = [ new Queue(), new Queue() ];
+const [catQ, dogQ] = [new Queue(), new Queue()];
 
 /**
  * Fill a queue with data.
@@ -24,17 +28,17 @@ const [ catQ, dogQ ] = [ new Queue(), new Queue() ];
 function populateQueue(queue, data) {
   // spread the data into an array
   // so we can iterate regardless of whether
-  // the data is one animal or several
+  // the data is one animal or several animals.
   data = [...data];
 
-  for (let i = 0; i < data.length; i ++) {
+  for (let i = 0; i < data.length; i++) {
     queue.enqueue(data[i]);
   }
 }
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
-    skip: (req, res) => process.env.NODE_ENV === 'test'
+    skip: () => process.env.NODE_ENV === 'test'
   })
 );
 app.use(
@@ -45,27 +49,25 @@ app.use(
 
 // By calling the populateQueue function in our get endpoints
 // we're ensuring there are always animals to see.
-// You would not do this in production, as it gives a false impression
-// of the availability of the animals.
+// You would not do this in production, as it gives
+// a false impression of the availability of the animals.
 
-app.get('/api/cat', (req, res, next) => {
-  
+app.get('/api/cat', (req, res) => {
   populateQueue(catQ, catData);
   return res.json(peek(catQ));
 });
 
-app.get('/api/dog', (req, res, next) => {
-  
+app.get('/api/dog', (req, res) => {
   populateQueue(dogQ, dogData);
   return res.json(peek(dogQ));
 });
 
-app.delete('/api/cat', (req, res, next) => {
+app.delete('/api/cat', (req, res) => {
   catQ.dequeue();
   res.sendStatus(204);
 });
 
-app.delete('/api/dog', (req, res, next) => {
+app.delete('/api/dog', (req, res) => {
   dogQ.dequeue();
   res.sendStatus(204);
 });
