@@ -35,7 +35,10 @@ function populateQueue(queue, data) {
     queue.enqueue(data[i]);
   }
 }
-
+// Morgan accepts two arguments: a `format` and an `options` object.
+// Here, the format is set depending on the value of `NODE_ENV`
+// and the `skip` functon in the options object determins the condition
+// under which the morgan logger will not be used.
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
     skip: () => process.env.NODE_ENV === 'test'
