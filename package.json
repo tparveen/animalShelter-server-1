@@ -1,5 +1,5 @@
 {
-  "name": "animalShelter-server",
+  "name": "animal-shelter-server",
   "version": "1.0.0",
   "engines": {
     "node": "8.8.0",
@@ -17,7 +17,7 @@
     "heroku": "node index.js",
     "travis": "mocha test/setup.test.js */*.test.js"
   },
-  "author": "Joe Turner <jturner@thinkful.com>",
+  "author": "Elias Mason <emason@thinkful.com>",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.4",
