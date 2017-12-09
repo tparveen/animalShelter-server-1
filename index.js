@@ -50,7 +50,10 @@ app.use(
   })
 );
 
-// By calling the populateQueue function in our get endpoints
+// serve the html file which offers links for testing the API.
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+
+// By calling the populateQueue function in our API endpoints
 // we're ensuring there are always animals to see.
 // You would not do this in production, as it gives
 // a false impression of the availability of the animals.
